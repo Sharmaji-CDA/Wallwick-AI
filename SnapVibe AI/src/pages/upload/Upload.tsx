@@ -160,7 +160,7 @@ export default function Upload() {
               for your upload.
             </p>
 
-            <AIPromptBox onSubmit={function (prompt: string): void {
+            <AIPromptBox onSubmit={function (): void {
               throw new Error("Function not implemented.");
             } } />
 

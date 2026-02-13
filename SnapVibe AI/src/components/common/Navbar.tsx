@@ -6,7 +6,7 @@ export default function Navbar() {
   const { user, profile, logout, loading } = useAuth();
 
   const [open, setOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
