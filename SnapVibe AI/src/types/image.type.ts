@@ -7,7 +7,7 @@ export type ImageItem = {
   creatorAvatar?: string;
   
   category?: string;
-  source: string;
+  source?: string;
   prompt?: string;
 
   likes: number;

@@ -8,6 +8,7 @@ type Props = {
   onClose: () => void;
   onLike: () => void;
   isLiked: boolean;
+  onDownload: () => Promise<void>;
 };
 
 export default function ImagePreviewModal({
