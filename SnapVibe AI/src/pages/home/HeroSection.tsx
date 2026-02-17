@@ -10,7 +10,7 @@ export default function HeroSection() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 800); // 🔥 Faster loading feel
+    }, 500); // 🔥 Faster loading feel
 
     return () => clearTimeout(timer);
   }, []);

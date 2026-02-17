@@ -35,6 +35,7 @@ export default function Upload() {
         imageUrl,
         creatorId: user.uid,
         creatorName: user.displayName || "Creator",
+        source: "uploads",
         price: null, // free for now
       });
 
