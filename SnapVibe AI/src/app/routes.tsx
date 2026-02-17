@@ -10,7 +10,7 @@ import Themes from "../pages/themes/Themes";
 import Subscription from "../pages/subscription/Subscription";
 import About from "../pages/about/About";
 import Contact from "../pages/contact/Contact";
-import NotFound from "../pages/not-found/NotFound";
+// import NotFound from "../pages/not-found/NotFound";
 import CreatorDashboard from "../pages/profile/CreatorDashboard";
 import UserProfile from "../pages/profile/UserProfile";
 import Login from "../pages/auth/Login";
@@ -58,7 +58,7 @@ export default function AppRoutes() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
-        <Route path="/*" element={<NotFound />} />
+        {/* <Route path="/*" element={<NotFound />} /> */}
       </Routes>
     </>
   );
