@@ -51,12 +51,12 @@ export default function FeaturedCreators() {
     num >= 1000 ? `${(num / 1000).toFixed(1)}k` : num;
 
   return (
-    <section className="bg-slate-950 py-20 border-t border-slate-800">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="bg-slate-950 py-12 sm:py-16 lg:py-20 border-t border-slate-800 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
 
         {/* Header */}
         <div className="mb-14 text-center">
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">
             🌟 Top Creators
           </h2>
           <p className="mt-2 text-sm text-slate-400">
@@ -65,12 +65,12 @@ export default function FeaturedCreators() {
         </div>
 
         {/* Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {loading
             ? [...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="animate-pulse rounded-3xl bg-slate-900 p-6"
+                  className="animate-pulse rounded-3xl bg-slate-900 p-5 sm:p-6"
                 >
                   <div className="mb-4 flex items-center gap-4">
                     <div className="h-14 w-14 rounded-full bg-slate-800" />
@@ -85,17 +85,17 @@ export default function FeaturedCreators() {
             : creators.map((c) => (
                 <div
                   key={c.id}
-                  className="group rounded-3xl bg-slate-900 p-6 border border-slate-800 transition hover:border-indigo-500 hover:shadow-xl"
+                  className="group rounded-3xl bg-slate-900 p-6 border border-slate-800 transition hover:border-indigo-500 hover:shadow-2xl"
                 >
                   {/* Header */}
                   <div className="mb-4 flex items-center gap-4">
                     <img
                       src={c.avatar}
                       alt={c.name}
-                      className="h-14 w-14 rounded-full ring-2 ring-indigo-500"
+                      className="h-12 w-12 sm:h-14 sm:w-14 rounded-full ring-2 ring-indigo-500"
                     />
                     <div>
-                      <h3 className="text-lg font-semibold text-white">
+                      <h3 className="text-base sm:text-lg font-semibold text-white">
                         {c.name}
                       </h3>
                       <p className="text-xs text-slate-400">
@@ -142,7 +142,7 @@ export default function FeaturedCreators() {
           </p>
           <button
             onClick={() => navigate("/subscription?type=creator")}
-            className="mt-6 rounded-xl px-6 py-3 text-sm font-semibold text-white hover:bg-slate-200"
+            className="mt-6 rounded-xl bg-slate-600 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-500"
           >
             Become a Creator →
           </button>

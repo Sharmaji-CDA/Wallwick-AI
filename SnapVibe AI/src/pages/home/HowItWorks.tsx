@@ -35,12 +35,12 @@ export default function HowItWorks() {
   const currentStep = steps.find((s) => s.id === active);
 
   return (
-    <section className="bg-slate-950 py-20 border-t border-slate-800">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="bg-slate-950 py-12 sm:py-16 lg:py-20 border-t border-slate-800 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
 
         {/* Header */}
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl font-bold text-white">
+        <div className="mb-12 sm:mb-16 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">
             How SnapVibe<span className="text-indigo-500">AI</span> Works
           </h2>
           <p className="mt-3 text-sm text-slate-400">
@@ -49,20 +49,20 @@ export default function HowItWorks() {
         </div>
 
         {/* Steps */}
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {steps.map((s) => (
             <div
               key={s.id}
               onClick={() => setActive(s.id)}
-              className={`cursor-pointer rounded-3xl p-8 text-center transition-all duration-300 border
+              className={`relative cursor-pointer rounded-3xl p-6 sm:p-8 text-center transition-all duration-300 border
                 ${
                   active === s.id
-                    ? "bg-indigo-600 text-white border-indigo-500 shadow-xl scale-105"
-                    : "bg-slate-900 text-slate-300 border-slate-800 hover:border-indigo-500"
+                    ? "bg-indigo-600 text-white border-indigo-500 shadow-xl scale-[1.03]"
+                    : "bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-500"
                 }`}
             >
-              <div className="mb-5 text-3xl">{s.icon}</div>
-              <h3 className="mb-2 text-lg font-semibold">
+              <div className="mb-4 text-2xl sm:text-3xl">{s.icon}</div>
+              <h3 className="mb-2 text-base sm:text-lg font-semibold">
                 {s.title}
               </h3>
               <p className="text-sm">
@@ -76,7 +76,7 @@ export default function HowItWorks() {
         <div className="mt-16 text-center">
           <button
             onClick={() => navigate(currentStep?.actionLink || "/")}
-            className="rounded-xl px-8 py-4 text-sm font-semibold text-white hover:bg-slate-200 transition"
+            className="rounded-xl bg-slate-800 px-6 sm:px-8 py-3 sm:py-4 text-sm font-semibold text-white hover:bg-slate-500 transition"
           >
             {currentStep?.actionText}
           </button>

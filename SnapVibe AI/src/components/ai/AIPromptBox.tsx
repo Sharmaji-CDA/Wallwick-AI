@@ -28,7 +28,7 @@ export default function AIPromptBox({
           onChange={(e) => setPrompt(e.target.value)}
           placeholder={placeholder}
           rows={4}
-          className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm focus:border-black focus:bg-white focus:outline-none transition"
+          className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm text-slate-700 focus:border-black focus:bg-white focus:outline-none transition"
         />
 
         <div className="absolute bottom-2 right-3 text-xs text-gray-400">

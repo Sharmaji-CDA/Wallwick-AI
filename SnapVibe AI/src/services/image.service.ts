@@ -68,17 +68,24 @@ export async function toggleLikeImage(
 /* -------------------------------- */
 
 async function resolveImageUrl(data: any) {
-  let resolvedUrl = data.imageUrl;
+  let path = data.imageUrl;
 
-  try {
-    resolvedUrl = await getDownloadURL(
-      ref(storage, data.imageUrl)
-    );
-  } catch (error) {
-    console.error("Storage fetch error:", error);
+  if (!path) return "";
+
+  // Remove accidental query params
+  if (path.includes("?")) {
+    path = path.split("?")[0];
   }
 
-  return resolvedUrl;
+  // Decode if stored encoded
+  path = decodeURIComponent(path);
+
+  try {
+    return await getDownloadURL(ref(storage, path));
+  } catch (error) {
+    console.error("Storage fetch error:", error);
+    return "";
+  }
 }
 
 /* -------------------------------- */

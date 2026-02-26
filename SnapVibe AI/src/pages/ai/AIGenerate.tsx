@@ -46,7 +46,7 @@ export default function AIGenerate() {
     if (loading) return;
 
     if (!user) {
-      navigate("/login");
+      navigate("/register");
       return;
     }
 
@@ -71,7 +71,7 @@ export default function AIGenerate() {
         window.setTimeout(() => setProgressText("Finalizing output..."), 1400)
       );
 
-      const result = await generateAIImage(prompt);
+      const result = await generateAIImage(prompt, user.uid);
 
       setImageUrl(result.imageUrl);
       setProgressText("");
@@ -171,8 +171,8 @@ export default function AIGenerate() {
                 />
 
                 {shouldWatermark && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-lg font-bold">
-                    SnapVibe<span className="text-medium text-indigo-400"></span>AI
+                  <div className="absolute inset-0 right-2 flex justify-end text-white text-sm font-bold">
+                    SnapVibe<span className="text-indigo-500">AI</span>
                   </div>
                 )}
               </div>
@@ -185,7 +185,7 @@ export default function AIGenerate() {
 
               <button
                 onClick={handleDownload}
-                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50 transition"
+                className="rounded-lg bg-slate-700 border px-4 py-2 text-sm hover:bg-slate-800 transition"
               >
                 Download
               </button>

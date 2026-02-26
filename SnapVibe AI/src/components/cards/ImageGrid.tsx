@@ -10,6 +10,7 @@ import {
 import type { ImageItem } from "../../types/image.type";
 import ImagePreviewModal from "../common/ImagePriewModal";
 import { useAuth } from "../../context/useAuth";
+import Modal from "../common/Modal";
 
 type Mode = "latest" | "trending" | "downloads";
 
@@ -187,25 +188,27 @@ export default function ImageGrid({
 
       {/* MODAL */}
       {selectedImage && (
-        <ImagePreviewModal
-          image={selectedImage}
-          isLiked={
-            user
-              ? selectedImage.likedBy?.includes(
-                  user.uid
-                ) ?? false
-              : false
-          }
-          onClose={() =>
-            setSelectedImage(null)
-          }
-          onLike={() =>
-            handleLike(selectedImage)
-          }
-          onDownload={() =>
-            handleDownload(selectedImage)
-          }
-        />
+        <Modal open={selectedImage !== null} onClose={() => setSelectedImage(null)}>
+          <ImagePreviewModal
+            image={selectedImage}
+            isLiked={
+              user
+                ? selectedImage.likedBy?.includes(
+                    user.uid
+                  ) ?? false
+                : false
+            }
+            onClose={() =>
+              setSelectedImage(null)
+            }
+            onLike={() =>
+              handleLike(selectedImage)
+            }
+            onDownload={() =>
+              handleDownload(selectedImage)
+            }
+          />
+        </Modal>
       )}
     </>
   );

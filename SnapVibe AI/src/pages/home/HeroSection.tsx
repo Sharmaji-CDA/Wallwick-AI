@@ -26,11 +26,11 @@ export default function HeroSection() {
     <section className="relative overflow-hidden bg-slate-950">
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-pink-500/20 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-yellow-500/20 blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 h-[520px] w-[90vw] max-w-[520px] -translate-x-1/2 rounded-full bg-pink-500/20 blur-[140px]" />
+        <div className="absolute bottom-0 right-0 h-[420px] w-[80vw] max-w-[420px] rounded-full bg-yellow-500/20 blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto max-w-4xl px-6 py-14 text-center">
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14 text-center">
 
         {!loading && (
           <div className="mb-6 inline-block rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 px-4 py-1 text-xs font-semibold text-black">
@@ -71,8 +71,8 @@ export default function HeroSection() {
         {loading ? (
           <Skeleton className="mx-auto h-14 max-w-2xl rounded-2xl" />
         ) : (
-          <div className="mx-auto mb-4 max-w-2xl">
-            <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+          <div className="whitespace-nowrap rounded-xl bg-slate-500 px-4 sm:px-6 py-2 text-sm font-semibold text-white hover:bg-slate-600 transition disabled:opacity-50">
+            <div className="flex items-center gap-3 rounded-2xl border border-slate/10 bg-white/5 px-4 py-3 backdrop-blur">
               <input
                 type="text"
                 value={search}
@@ -87,13 +87,13 @@ export default function HeroSection() {
               <button
                 disabled={!search.trim()}
                 onClick={handleGenerate}
-                className="rounded-xl bg-indigo-600 px-6 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+                className="rounded-xl bg-slate-600 px-6 py-2 text-sm font-semibold text-white hover:bg-slate-600 transition disabled:opacity-50"
               >
                 Generate
               </button>
             </div>
 
-            <p className="mt-3 text-xs text-slate-500">
+            <p className="mt-3 text-xs text-slate-400">
               Free users get watermark • Upgrade for HD & no watermark
             </p>
           </div>
@@ -123,7 +123,7 @@ export default function HeroSection() {
 
         {/* Mobile Preview */}
         {!loading && (
-          <div className="mt-14 flex flex-wrap justify-center gap-6">
+          <div className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6">
             {[
               "https://images.unsplash.com/photo-1617854818583-09e7f077a156?auto=format&fit=crop&w=400&q=80",
               "https://images.unsplash.com/photo-1618598348323-0b47b13d5f91?auto=format&fit=crop&w=400&q=80",
@@ -131,7 +131,7 @@ export default function HeroSection() {
             ].map((img, i) => (
               <div
                 key={i}
-                className="relative h-[420px] w-[220px] rounded-[32px] border-4 border-white/10 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden transition hover:scale-105 hover:-translate-y-1"
+                className="relative h-[360px] w-[180px] sm:h-[420px] sm:w-[220px] rounded-[32px] border-4 border-white/10 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden transition hover:scale-105 hover:-translate-y-1"
               >
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 h-5 w-24 bg-black rounded-b-xl z-10" />
                 <img

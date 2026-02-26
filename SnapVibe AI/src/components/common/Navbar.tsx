@@ -12,6 +12,12 @@ export default function Navbar() {
 
   /* ---------------- CLOSE DROPDOWN OUTSIDE CLICK ---------------- */
   useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
     function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
@@ -28,7 +34,7 @@ export default function Navbar() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [open]);
+  }, [open, mobileOpen]);
 
   const navClass = ({ isActive }: { isActive: boolean }) =>
     `relative block py-2 px-1 transition ${
@@ -163,7 +169,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-slate-800 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+                  className="bg-slate-800 px-4 py-2 rounded-lg text-sm font-semibold text-white hover:bg-slate-500"
                 >
                   Get Started
                 </Link>
@@ -195,7 +201,7 @@ export default function Navbar() {
 
         {/* Slide Panel */}
         <div
-          className={`absolute left-0 top-0 h-full w-80 bg-slate-900 p-6 transform transition-transform ${
+          className={`absolute left-0 top-0 h-full w-[80%] max-w-xs bg-slate-900 p-6 transform transition-transform ${
             mobileOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -225,7 +231,9 @@ export default function Navbar() {
                 <NavLink to="/wallpapers" className={navClass}>Wallpapers</NavLink>
                 <NavLink to="/images" className={navClass}>Images</NavLink>
                 <NavLink to="/themes" className={navClass}>Themes</NavLink>
+                <NavLink to="/gallery" className={navClass}>Gallery</NavLink>
                 <NavLink to="/subscription" className={navClass}>Subscription</NavLink>
+                <NavLink to="/contact" className={navClass}>Contact Us</NavLink>
 
                 {profile?.accountType === "creator" && (
                   <NavLink to="/dashboard" className={navClass}>Dashboard</NavLink>
@@ -251,7 +259,9 @@ export default function Navbar() {
                 <NavLink to="/wallpapers" className={navClass}>Wallpapers</NavLink>
                 <NavLink to="/images" className={navClass}>Images</NavLink>
                 <NavLink to="/themes" className={navClass}>Themes</NavLink>
+                <NavLink to="/gallery" className={navClass}>Gallery</NavLink>
                 <NavLink to="/subscription" className={navClass}>Subscription</NavLink>
+                <NavLink to="/contact" className={navClass}>Contact Us</NavLink>
               </div>
 
               <div className="absolute bottom-6 left-6 right-6 space-y-3">

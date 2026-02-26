@@ -10,6 +10,7 @@ import type { ImageItem } from "../../types/image.type";
 import ImagePreviewModal from "../../components/common/ImagePriewModal";
 import ImageCard from "../../components/cards/ImageCard";
 import { useAuth } from "../../context/useAuth";
+import Modal from "../../components/common/Modal";
 
 export default function TrendingSection() {
   const { user } = useAuth();
@@ -89,13 +90,13 @@ export default function TrendingSection() {
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-slate-950 to-slate-900 py-14">
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 to-slate-900 py-14">
 
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-[300px] w-[90vw] max-w-[600px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
       </div>
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
 
         {/* HEADER */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -119,7 +120,7 @@ export default function TrendingSection() {
 
         {/* CONTENT */}
         {loading ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <Skeleton key={i} className="aspect-[9/16] rounded-2xl" />
             ))}
@@ -219,17 +220,20 @@ export default function TrendingSection() {
 
       {/* MODAL */}
       {selectedImage && (
-        <ImagePreviewModal
-          image={selectedImage}
-          isLiked={
-            user
-              ? selectedImage.likedBy?.includes(user.uid) ?? false
-              : false
-          }
-          onClose={() => setSelectedImage(null)}
-          onLike={() => handleLike(selectedImage)}
-          onDownload={() => handleDownload(selectedImage)}
-        />
+        <Modal open={selectedImage !== null} onClose={() => setSelectedImage(null)}>
+
+          <ImagePreviewModal
+            image={selectedImage}
+            isLiked={
+              user
+                ? selectedImage.likedBy?.includes(user.uid) ?? false
+                : false
+            }
+            onClose={() => setSelectedImage(null)}
+            onLike={() => handleLike(selectedImage)}
+            onDownload={() => handleDownload(selectedImage)}
+          />
+        </Modal>
       )}
     </section>
   );

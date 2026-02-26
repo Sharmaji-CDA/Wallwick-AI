@@ -1,26 +1,23 @@
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "./firebase";
 
 // Creator content upload
 export async function uploadImage(file: File, userId: string) {
-  const fileRef = ref(
-    storage,
-    `uploads/${userId}/${Date.now()}-${file.name}`
-  );
+  const filePath = `uploads/${userId}/${Date.now()}-${file.name}`;
+  const fileRef = ref(storage, filePath);
 
   await uploadBytes(fileRef, file);
-  const url = await getDownloadURL(fileRef);
 
-  return url;
+  return filePath; // 🔥 RETURN PATH ONLY
 }
 
 // Profile avatar upload
 export async function uploadAvatar(file: File, userId: string) {
-  const fileRef = ref(storage, `avatars/${userId}`);
+  const filePath = `avatars/${userId}`;
+  const fileRef = ref(storage, filePath);
 
   await uploadBytes(fileRef, file);
-  const url = await getDownloadURL(fileRef);
 
-  return url;
+  return filePath; // 🔥 RETURN PATH ONLY
 }
 

@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="border-t bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-10 text-sm text-slate-600 md:grid-cols-4">
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 text-sm text-slate-600">
           {/* Brand */}
           <div>
             <h3 className="mb-3 text-lg font-semibold text-slate-900">
@@ -16,19 +16,19 @@ export default function Footer() {
 
           {/* Explore */}
           <div>
-            <h4 className="mb-3 font-semibold text-slate-900">Explore</h4>
+            <h4 className="mb-3 text-base sm:text-lg font-semibold text-slate-900">Explore</h4>
             <ul className="space-y-2">
-              <li><a className="hover:text-indigo-500" href="/wallpapers">Wallpapers</a></li>
-              <li><a className="hover:text-indigo-500" href="/images">Images</a></li>
-              <li><a className="hover:text-indigo-500" href="/themes">Themes</a></li>
-              <li><a className="hover:text-indigo-500" href="/trending">Trending</a></li>
-              <li><a className="hover:text-indigo-500" href="/gallery">Gallery</a></li>
+              <li><a className="block hover:text-indigo-500 transition py-1" href="/wallpapers">Wallpapers</a></li>
+              <li><a className="block hover:text-indigo-500 transition py-1" href="/images">Images</a></li>
+              <li><a className="block hover:text-indigo-500 transition py-1" href="/themes">Themes</a></li>
+              <li><a className="block hover:text-indigo-500 transition py-1" href="/trending">Trending</a></li>
+              <li><a className="block hover:text-indigo-500 transition py-1" href="/gallery">Gallery</a></li>
             </ul>
           </div>
 
           {/* Creators */}
           <div>
-            <h4 className="mb-3 font-semibold text-slate-900">Creators</h4>
+            <h4 className="mb-3 text-sm sm:text-base font-semibold text-slate-900">Creators</h4>
             <ul className="space-y-2">
               <li><a className="hover:text-indigo-500" href="/upload">Upload</a></li>
               <li><a className="hover:text-indigo-500" href="/creator/dashboard">Creator Program</a></li>
@@ -38,7 +38,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-3 font-semibold text-slate-900">Company</h4>
+            <h4 className="mb-3 text-sm sm:text-base font-semibold text-slate-900">Company</h4>
             <ul className="space-y-2">
               <li><a className="hover:text-indigo-500" href="/about">About</a></li>
               <li><a className="hover:text-indigo-500" href="/contact">Contact</a></li>
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-6 text-xs text-slate-500 sm:flex-row">
+        <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t pt-6 text-xs text-slate-500 text-center sm:text-left">
           <span>
             © {new Date().getFullYear()} SnapVibe AI. All rights reserved.
           </span>

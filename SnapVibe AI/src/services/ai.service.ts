@@ -1,18 +1,22 @@
-export const generateAIImage = async (prompt: string) => {
-  const res = await fetch("/generateAIImage", {
+const BASE_URL = "https://generateimagehf-2cj2c7urlq-uc.a.run.app";
+
+export const generateAIImage = async (
+  prompt: string,
+  uid: string
+) => {
+  const res = await fetch(`${BASE_URL}/generateImageHF`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prompt, uid }),
   });
 
-  if (!res.ok) {
-    const error = await res.json();
+  const data = await res.json();
 
-    // pass meaningful message to UI
-    throw new Error(
-      error?.message || "AI service failed"
-    );
+  if (!res.ok) {
+    throw new Error(data?.error || "AI generation failed");
   }
 
-  return res.json(); // { imageUrl }
+  return data; // { imageUrl }
 };

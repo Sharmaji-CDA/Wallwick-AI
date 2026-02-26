@@ -37,29 +37,28 @@ export default function AppRoutes() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/upgrade" element={<ProtectedRoute><Upgrade /></ProtectedRoute>} />
           <Route path="/upload" element={<CreatorRoute><Upload /></CreatorRoute>} />
+
+          <Route path="/wallpapers" element={<Wallpapers />} />
+          <Route path="/images" element={<Images />} />
+          <Route path="/themes" element={<Themes />} />
+          <Route path="/subscription" element={<Subscription />} />
+          <Route path="/ai/generate" element={<AIGenerate />} />
+          <Route path="/creator/dashboard" element={<CreatorRoute><CreatorDashboard /></CreatorRoute>} />
+          
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/terms-condition" element={<TermsAndConditions />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+
+          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+          {/* <Route path="/*" element={<NotFound />} /> */}
         </Routes>
       </Suspense>
-      <Routes>
-        <Route path="/wallpapers" element={<Wallpapers />} />
-        <Route path="/images" element={<Images />} />
-        <Route path="/themes" element={<Themes />} />
-        <Route path="/subscription" element={<Subscription />} />
-        <Route path="/ai/generate" element={<AIGenerate />} />
-        <Route path="/creator/dashboard" element={<CreatorRoute><CreatorDashboard /></CreatorRoute>} />
-        
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/terms-condition" element={<TermsAndConditions />} />
-        <Route path="/refund-policy" element={<RefundPolicy />} />
-
-        <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-        <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
-        {/* <Route path="/*" element={<NotFound />} /> */}
-      </Routes>
     </>
   );
 }

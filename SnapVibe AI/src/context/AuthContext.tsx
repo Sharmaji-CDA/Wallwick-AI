@@ -18,8 +18,8 @@ import {
   getUserProfile,
   type UserProfile,
 } from "../services/user.service";
-import { updateDoc, doc } from "firebase/firestore";
-import { db } from "../services/firebase";
+// import { updateDoc, doc } from "firebase/firestore";
+// import { db } from "../services/firebase";
 
 type AuthContextType = {
   user: User | null;
@@ -55,67 +55,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await ensureUserDoc(currentUser.uid);
 
         let userProfile = await getUserProfile(currentUser.uid);
-        if (!userProfile) {
-          setProfile(null);
-          setLoading(false);
-          return;
-        }
-
-        const now = new Date();
-        const today = now.toDateString();
-
-        /* ---------------- DAILY AI RESET ---------------- */
-        if (userProfile.lastAIReset) {
-          const lastResetDate = new Date(
-            userProfile.lastAIReset.seconds
-              ? userProfile.lastAIReset.seconds * 1000
-              : userProfile.lastAIReset
-          ).toDateString();
-
-          if (lastResetDate !== today) {
-            await updateDoc(doc(db, "users", currentUser.uid), {
-              aiUsed: 0,
-              lastAIReset: now,
-            });
-
-            userProfile.aiUsed = 0;
-          }
-        } else {
-          // First-time reset initialization
-          await updateDoc(doc(db, "users", currentUser.uid), {
-            lastAIReset: now,
-          });
-        }
-
-        /* ---------------- SUBSCRIPTION EXPIRY CHECK ---------------- */
-        if (
-          userProfile.subscriptionStatus === "active" &&
-          userProfile.subscriptionEnd
-        ) {
-          const endDate = new Date(
-            userProfile.subscriptionEnd.seconds
-              ? userProfile.subscriptionEnd.seconds * 1000
-              : userProfile.subscriptionEnd
-          );
-
-          if (endDate < now) {
-            await updateDoc(doc(db, "users", currentUser.uid), {
-              subscriptionStatus: "expired",
-              plan: "basic",
-              accountType: "user",
-            });
-
-            userProfile.subscriptionStatus = "expired";
-            userProfile.plan = "basic";
-            userProfile.accountType = "user";
-          }
-        }
-
-        setProfile(userProfile);
+        setProfile(userProfile || null);
       } catch (error) {
         console.error("Auth initialization error:", error);
-        setUser(null);
-        setProfile(null);
       } finally {
         setLoading(false);
       }
