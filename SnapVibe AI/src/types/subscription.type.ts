@@ -6,8 +6,9 @@ import type { AccountType } from "./user.type";
 export type SubscriptionPlan =
   | "free"
   | "basic"
-  | "standard"
-  | "premium";
+  | "premium"
+  | "go"
+  | "pro";
 
 
 /* ================= STATUS ================= */
