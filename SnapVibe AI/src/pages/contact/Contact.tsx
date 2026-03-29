@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../components/common/Button";
+import Button from "../../components/ui/Button";
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);

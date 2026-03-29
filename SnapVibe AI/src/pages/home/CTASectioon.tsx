@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
+import { Sparkles, Upload } from "lucide-react";
 
 export default function CTASection() {
   const { user, profile, loading } = useAuth();
@@ -10,70 +11,75 @@ export default function CTASection() {
     if (!user) {
       return {
         to: "/register",
-        text: "Start Free Today →",
+        text: "Start Creating Free",
       };
     }
 
-    if (profile?.accountType === "creator") {
+    if (profile?.role === "creator") {
       return {
         to: "/creator/dashboard",
-        text: "Open Creator Dashboard →",
+        text: "Go to Dashboard",
       };
     }
 
     return {
-      to: "/gallery",
-      text: "Explore Premium Wallpapers →",
+      to: "/ai/generate",
+      text: "Create with AI",
     };
   };
 
   const cta = getPrimaryCTA();
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 border-t border-slate-800 py-14 sm:py-20 lg:py-24 text-white">
+    <section className="relative overflow-hidden bg-slate-950 border-t border-slate-800 py-16 sm:py-20 text-white">
 
-      {/* Subtle glow (ONLY bottom CTA, not everywhere) */}
+      {/* Glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[400px] w-[90vw] max-w-[400px] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-[400px] w-[90vw] max-w-[500px] -translate-x-1/2 rounded-full bg-pink-500/20 blur-[140px]" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 text-center">
 
-        <h2 className="mb-6 text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
-          Discover Premium AI Wallpapers
+        {/* HEADLINE */}
+        <h2 className="mb-6 text-3xl sm:text-5xl font-extrabold leading-tight">
+          Create, Explore & Earn with AI
           <br />
-          <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            or Start Selling Yours
+          <span className="bg-gradient-to-r from-pink-400 to-yellow-400 bg-clip-text text-transparent">
+            All in One Platform
           </span>
         </h2>
 
-        <p className="mx-auto mb-10 max-w-2xl text-slate-400 text-sm sm:text-base leading-relaxed">
-          Buy exclusive mobile wallpapers from creators starting at ₹10
-          or generate your own with AI.
+        {/* SUBTEXT */}
+        <p className="mx-auto mb-10 max-w-2xl text-slate-400 text-sm sm:text-base">
+          Generate stunning visuals, discover new ideas, and earn from your creations.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+        {/* CTA BUTTONS */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 
           {cta && (
             <Link
               to={cta.to}
-              className="w-full sm:w-auto rounded-xl bg-white px-6 sm:px-10 py-3 sm:py-4 text-sm font-semibold text-black transition hover:scale-105 hover:shadow-xl"
+              className="flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl bg-gradient-to-r from-pink-500 to-yellow-400 px-8 py-3 text-sm font-semibold text-black hover:opacity-90 transition"
             >
+              <Sparkles size={16} />
               {cta.text}
             </Link>
           )}
 
           <Link
             to="/subscription?type=creator"
-            className="w-full sm:w-auto rounded-xl border border-white/30 px-6 sm:px-10 py-3 sm:py-4 text-sm font-medium transition hover:bg-white/10"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl border border-white/30 px-8 py-3 text-sm font-medium hover:bg-white/10 transition"
           >
-            Become a Creator
+            <Upload size={16} />
+            Earn as Creator
           </Link>
 
         </div>
 
+        {/* TRUST */}
         <p className="mt-6 text-xs text-slate-500">
-          No upfront cost • Earn from every download • Cancel anytime
+          Free to start • No credit card required • Earn anytime
         </p>
 
       </div>

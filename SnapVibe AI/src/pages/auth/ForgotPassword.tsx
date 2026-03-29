@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 export default function ForgotPassword() {
   const { resetPassword } = useAuth();

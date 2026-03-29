@@ -29,4 +29,4 @@ setGlobalOptions({ maxInstances: 10 });
 //   response.send("Hello from Firebase!");
 // });
 
-export { generateImageHF } from "./generateImage";
+export { generateAI } from "./generateImage";

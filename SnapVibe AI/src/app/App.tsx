@@ -1,14 +1,17 @@
-import Footer from "../components/common/Footer"
-import Navbar from "../components/common/Navbar"
-import AppRoutes from "./routes"
+import Footer from "../components/layout/Footer"
+import Navbar from "../components/layout/Navbar"
+import { AuthProvider } from "../contexts/auth/AuthContext"
+import AppRoutes from "./AppRoutes"
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <AppRoutes />
-      <Footer />
+      <AuthProvider>
+        <Navbar />
+        <AppRoutes />
+        <Footer />
+      </AuthProvider>
     </>
   )
 }

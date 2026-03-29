@@ -7,9 +7,9 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../../services/firebase";
-import ImageCard from "../../components/cards/ImageCard";
-import type { ImageItem } from "../../types/image.type";
+import { db } from "../../firebase/firebase";
+import ImageCard from "../../components/asset/AssetCard";
+import type { ImageItem } from "../../types/asset.type";
 
 
 export default function Gallery() {

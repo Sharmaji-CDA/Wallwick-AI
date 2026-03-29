@@ -4,7 +4,7 @@ import App from "./app/App";
 import "./index.css";
 import "./styles/tailwind.css"; // 👈 IMPORTANT
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./contexts/auth/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

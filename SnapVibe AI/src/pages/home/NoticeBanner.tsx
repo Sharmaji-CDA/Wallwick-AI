@@ -41,7 +41,7 @@ export default function NoticeBanner() {
   }, []);
 
   return (
-    <div className="sticky top-16 z-40 overflow-hidden">
+    <div className="top-16 z-40 will-change-transform overflow-hidden">
       <div
         className={`transition-all duration-300 ease-in-out ${
           visible ? "max-h-24 opacity-100" : "max-h-0 opacity-0"

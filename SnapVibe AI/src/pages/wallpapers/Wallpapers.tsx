@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ImageGrid from "../../components/cards/ImageGrid";
+import ImageGrid from "../../components/asset/AssetGrid";
 
 const CATEGORIES = [
   "All",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Skeleton from "../../components/common/Skeleton";
+import Skeleton from "../../components/ui/Skeleton";
 
 function CreatorSkeletonCard() {
   return (

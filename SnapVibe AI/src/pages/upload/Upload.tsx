@@ -1,9 +1,8 @@
-import Button from "../../components/common/Button";
+import Button from "../../components/ui/Button";
 import AIPromptBox from "../../components/ai/AIPromptBox";
 import { useState } from "react";
 import { uploadImage } from "../../services/storage.service";
-import { saveImageMetadata } from "../../services/image.service";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 
 
 type UserPlan = "free" | "standard" | "pro";
@@ -30,7 +29,7 @@ export default function Upload() {
       const imageUrl = await uploadImage(file, user.uid);
 
       // 2. Save metadata to Firestore
-      await saveImageMetadata({
+      await ({
         title,
         imageUrl,
         creatorId: user.uid,

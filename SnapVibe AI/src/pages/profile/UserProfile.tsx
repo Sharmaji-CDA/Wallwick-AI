@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/useAuth";
-import {
-  updateUserProfileData,
-} from "../../services/user.service";
+import { useAuth } from "../../contexts/auth/useAuth";
 import { uploadAvatar } from "../../services/storage.service";
 import { updateProfile } from "firebase/auth";
-import {
-  getImagesByCreator,
-} from "../../services/image.service";
-import ImageCard from "../../components/cards/ImageCard";
+import ImageCard from "../../components/asset/AssetCard";
+import { updateUserProfileData } from "../../services/user/user.service";
+import { getAssetsByCreator } from "../../services/assets/asset.query";
+import type { ImageItem } from "../../types/asset.type";
+import EditProfileModal from "../../components/modals/EditProfilModal";
 
 export default function UserProfile() {
   const { user, profile, refreshProfile } = useAuth();
 
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [editOpen, setEditOpen] = useState(false);
@@ -21,7 +19,7 @@ export default function UserProfile() {
   const [bio, setBio] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
 
-  const isCreator = profile?.accountType === "creator";
+  const isCreator = profile?.role === "creator";
 
   useEffect(() => {
     if (!user) return;
@@ -30,8 +28,12 @@ export default function UserProfile() {
     setBio(profile?.bio || "");
 
     if (isCreator) {
-      getImagesByCreator(user.uid)
+      getAssetsByCreator(user.uid)
         .then(setImages)
+        .catch((err) => {
+          console.error("Failed to fetch assets:", err);
+          setImages([]);
+        })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
@@ -45,36 +47,43 @@ export default function UserProfile() {
 
     let photoURL = user.photoURL || "";
 
-    if (photoFile) {
-      photoURL = await uploadAvatar(photoFile, user.uid);
+    try {
+      if (photoFile) {
+        photoURL = await uploadAvatar(photoFile, user.uid);
+      }
+
+      // ✅ FIXED
+      await updateProfile(user, {
+        displayName: name,
+        photoURL,
+      });
+
+      await updateUserProfileData(user.uid, {
+        displayName: name,
+        bio,
+        photoPath: photoURL,
+      });
+
+      await refreshProfile();
+      setEditOpen(false);
+
+    } catch (error) {
+      console.error("Profile update failed:", error);
     }
-
-    await updateProfile(user, {
-      displayName: name,
-      photoURL,
-    });
-
-    await updateUserProfileData(user.uid, {
-      displayName: name,
-      bio,
-      photoURL,
-    });
-
-    await refreshProfile();
-    setEditOpen(false);
   };
 
   return (
     <section className="bg-slate-50">
       <div className="mx-auto max-w-7xl px-6 py-20">
 
-        {/* SHARED PROFILE HEADER */}
+        {/* PROFILE HEADER */}
         <div className="rounded-3xl bg-white p-8 shadow-sm mb-12">
           <div className="flex items-center justify-between">
 
             <div className="flex items-center gap-6">
               <img
                 src={
+                  profile?.photoPath ||
                   user.photoURL ||
                   `https://ui-avatars.com/api/?name=${name}`
                 }
@@ -89,8 +98,8 @@ export default function UserProfile() {
                   {user.email}
                 </p>
 
-                <span className="mt-2 inline-block px-3 py-1 text-xs rounded-full bg-slate-700">
-                  {profile?.accountType?.toUpperCase()} • {profile?.plan}
+                <span className="mt-2 inline-block px-3 py-1 text-xs rounded-full bg-slate-700 text-white">
+                  {profile?.role?.toUpperCase()} • {profile?.subscription}
                 </span>
 
                 {bio && (
@@ -101,7 +110,6 @@ export default function UserProfile() {
               </div>
             </div>
 
-            {/* EDIT BUTTON (FOR BOTH USER & CREATOR) */}
             <button
               onClick={() => setEditOpen(true)}
               className="px-6 py-3 rounded-xl bg-black text-white text-sm font-medium"
@@ -112,14 +120,14 @@ export default function UserProfile() {
           </div>
         </div>
 
-        {/* ROLE-BASED CONTENT */}
+        {/* ROLE CONTENT */}
         {!isCreator ? (
-          <NormalUserSection plan={profile?.plan} />
+          <NormalUserSection plan={profile?.subscription} />
         ) : (
           <CreatorSection images={images} loading={loading} />
         )}
 
-        {/* EDIT MODAL */}
+        {/* MODAL */}
         {editOpen && (
           <EditProfileModal
             name={name}
@@ -138,7 +146,9 @@ export default function UserProfile() {
 }
 
 
-function NormalUserSection({ plan }: any) {
+/* ================= SECTIONS ================= */
+
+function NormalUserSection({ plan }: { plan?: string }) {
   return (
     <div className="bg-white rounded-3xl p-8 shadow-sm">
       <h2 className="text-xl font-semibold mb-4">
@@ -146,7 +156,7 @@ function NormalUserSection({ plan }: any) {
       </h2>
 
       <p className="text-slate-600">
-        You are on the <b>{plan}</b> plan.
+        You are on the <b>{plan?.toUpperCase()}</b> plan.
       </p>
 
       <button className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-xl">
@@ -156,8 +166,13 @@ function NormalUserSection({ plan }: any) {
   );
 }
 
-
-function CreatorSection({ images, loading }: any) {
+function CreatorSection({
+  images,
+  loading,
+}: {
+  images: ImageItem[];
+  loading: boolean;
+}) {
   if (loading) return <div>Loading uploads...</div>;
 
   return (
@@ -167,87 +182,17 @@ function CreatorSection({ images, loading }: any) {
       </h2>
 
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-        {images.map((img: any) => (
-          <ImageCard key={img.id} {...img} />
+        {images.map((img) => (
+          <ImageCard 
+            key={img.id} 
+            {...img}
+            price={img.price ?? undefined}
+            imageUrl={img.imagePath}
+            likes={0}
+            downloads={0}
+          />
         ))}
       </div>
     </>
-  );
-}
-
-
-
-function EditProfileModal({
-  name,
-  bio,
-  setName,
-  setBio,
-  setPhotoFile,
-  onClose,
-  onSave,
-}: any) {
-  return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center z-50">
-      <div className="w-full max-w-lg bg-white rounded-3xl p-8 space-y-6">
-
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl text-slate-700 font-bold">
-            Edit Profile
-          </h2>
-          <button onClick={onClose}>✕</button>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm text-slate-700 font-medium">
-            Display Name
-          </label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border border-slate-400 rounded-xl p-3"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm text-slate-700 font-medium">
-            Bio
-          </label>
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            rows={4}
-            className="w-full border border-slate-400 rounded-xl p-3"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm text-slate-700 font-medium">
-            Profile Photo
-          </label>
-          <input
-            type="file"
-            onChange={(e) =>
-              setPhotoFile(e.target.files?.[0] || null)
-            }
-            className="w-full border border-slate-400 rounded-xl p-2"
-          />
-        </div>
-
-        <div className="flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-5 py-2 border rounded-xl"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={onSave}
-            className="px-6 py-2 bg-black text-white rounded-xl"
-          >
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
   );
 }
