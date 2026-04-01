@@ -6,6 +6,8 @@ import {
   serverTimestamp,
   getDoc,
   setDoc,
+  addDoc,
+  collection,
 } from "firebase/firestore";
 
 import { db } from "../../firebase/firebase";
@@ -79,6 +81,29 @@ export const toggleFollow = async (
     await updateDoc(doc(db, "users", userId), {
       followingCount: increment(1),
     });
+
+    /* ================= 🔥 NOTIFICATION ================= */
+
+    if (userId !== creatorId) {
+      const userRef = doc(db, "users", userId);
+      const userSnap = await getDoc(userRef);
+
+      const username = userSnap.exists()
+        ? userSnap.data().displayName || "Someone"
+        : "Someone";
+
+      await addDoc(collection(db, "notifications"), {
+        userId: creatorId,          // receiver
+        type: "follow",
+        title: "New Follower 🎉",
+        message: `${username} started following you`,
+        creatorId: userId,          // who followed
+        isRead: false,
+        createdAt: serverTimestamp(),
+      });
+    }
+
+    /* ================================================= */
 
     return { following: true };
 

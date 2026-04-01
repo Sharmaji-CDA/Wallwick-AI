@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   setDoc,
   orderBy,
+  addDoc,
 } from "firebase/firestore";
 
 import { db } from "../../firebase/firebase";
@@ -82,6 +83,30 @@ export const toggleLike = async (userId: string, imageId: string) => {
     });
 
     await incrementLike(imageId, 1);
+
+    /* ================= 🔥 NOTIFICATION ================= */
+
+    if (userId !== creatorId) {
+      const userRef = doc(db, "users", userId);
+      const userSnap = await getDoc(userRef);
+
+      const username = userSnap.exists()
+        ? userSnap.data().displayName || "Someone"
+        : "Someone";
+
+      await addDoc(collection(db, "notifications"), {
+        userId: creatorId,          // receiver
+        type: "like",
+        title: "New Like ❤️",
+        message: `${username} liked your image`,
+        imageId,
+        creatorId: userId,          // who liked
+        isRead: false,
+        createdAt: serverTimestamp(),
+      });
+    }
+
+    /* ================================================= */
 
     return { liked: true };
   }

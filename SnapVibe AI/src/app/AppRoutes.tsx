@@ -22,6 +22,7 @@ import Template from "../pages/template/Template";
 import Explore from "../pages/explore/Explore";
 import Dashboard from "../pages/dashboard/Dashboard";
 import FAQ from "../pages/faqs/Faqs";
+import NotificationPage from "../pages/notifications/NotificationPage";
 
 const Home = lazy(() => import("../pages/home/Home"));
 // const Gallery = lazy(() => import("../pages/gallery/Gallery"));
@@ -43,6 +44,7 @@ export default function AppRoutes() {
           <Route path="/template" element={<Template />} />
           <Route path="/subscription" element={<Subscription />} />
           <Route path="/ai/generate" element={<AIGenerate />} />
+          <Route path="/notifications" element={<NotificationPage />} />
           
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

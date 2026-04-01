@@ -4,6 +4,7 @@ import {
   doc,
   query,
   where,
+  addDoc,
   getDocs,
   getDoc,
   serverTimestamp,
@@ -80,6 +81,23 @@ export const recordDownload = async (
       downloadsCount: increment(1),
       updatedAt: serverTimestamp(),
     });
+
+    /* ================= 🔥 NOTIFICATION ================= */
+
+    if (userId !== creatorId) {
+      await addDoc(collection(db, "notifications"), {
+        userId: creatorId,
+        type: "download",
+        title: "Image Downloaded ⬇️",
+        message: "Someone downloaded your image",
+        imageId,
+        creatorId: userId, // who performed action
+        isRead: false,
+        createdAt: serverTimestamp(),
+      });
+    }
+
+    /* ================================================== */
 
     return { success: true, duplicate: false };
 
